@@ -3,7 +3,7 @@ package service;
 import entity.*;
 import repository.BookingRepository;
 import repository.ResourceRepository;
-
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,23 +28,32 @@ public class BookingService {
 
     public Booking confirmBooking(String userId, ResourceSelection selection) {
         Resource resource = resourceRepo.getResourceById(selection.getResourceId());
-        if (resource == null) return null;
+        if (resource == null)
+            return null;
 
         double cost = Calculator.calculateCost(resource, selection.getTimeRange());
-        Booking booking = new Booking(UUID.randomUUID().toString(), userId, resource.getId(), selection.getTimeRange(), cost);
+        Booking booking = new Booking(UUID.randomUUID().toString(), userId, resource.getId(), selection.getTimeRange(),
+                cost);
         bookingRepo.addBooking(booking);
         return booking;
     }
-    public void bookResource(String resourceId, String username) {
-        Resource resource = resourceRepository.getResourceById(resourceId);
+
+    public void bookResource(String resourceId, String username, String dateFrom, String dateTo, String timeFrom,
+            String timeTo) {
+        Resource resource = resourceRepo.getResourceById(resourceId);
 
         if (resource != null && resource.isAvailable()) {
             String bookingId = UUID.randomUUID().toString();
-            Booking booking = new Booking(bookingId, resourceId, username);
-            bookingRepository.save(booking);
+            String userId = username; // Assuming username is the user ID for simplicity
+            LocalDateTime start = LocalDateTime.parse(dateFrom + "T" + timeFrom);
+            LocalDateTime end = LocalDateTime.parse(dateTo + "T" + timeTo);
+            DateTimeRange timeRange = new DateTimeRange(start, end);
+            Booking booking = new Booking(bookingId, userId, resourceId, timeRange,
+                    resource.getCostPerHour() * timeRange.getDurationInHours());
+            bookingRepo.addBooking(booking);
 
             resource.setAvailable(false);
-            resourceRepository.updateResource(resource);
+            resourceRepo.updateResource(resource);
 
             System.out.println("Resource booked successfully! Booking ID: " + bookingId);
         } else {

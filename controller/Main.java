@@ -63,7 +63,7 @@ public class Main {
                         } else if (user instanceof ResourceManager) {
                             managerMenu(scanner, resourceService);
                         } else {
-                            regularUserMenu(scanner, resourceService, bookingService);
+                            regularUserMenu(scanner, resourceService, bookingService,user);
                         }
                     } else {
                         System.out.println("Invalid credentials!");
@@ -169,7 +169,7 @@ public class Main {
                 System.exit(0);
  }
 }
-private static void regularUserMenu(Scanner scanner, ResourceService resourceService, BookingService bookingService) {
+private static void regularUserMenu(Scanner scanner, ResourceService resourceService, BookingService bookingService, User user) {
     System.out.println("\n--- Regular User Menu ---");
     System.out.println("1. View Available Resources");
     System.out.println("2. Book Resource");
@@ -187,7 +187,17 @@ private static void regularUserMenu(Scanner scanner, ResourceService resourceSer
         case 2:
             System.out.print("Enter Resource ID to book: ");
             String resId = scanner.nextLine();
-            bookingService.bookResource(resId);
+            System.out.print("Enter Booking Date from : eg. YYYY-MM-DD ");
+            String dateFrom = scanner.nextLine(); // Example: "2023-10-01T10:00"
+            System.out.print("Enter Booking Date to : eg. YYYY-MM-DD ");
+            String dateTo = scanner.nextLine(); // Example: "2023-10-01T12:00"
+            System.out.print("Enter Time Range from (e.g.10:00/13:00): ");
+
+            String timeRangeStart = scanner.nextLine(); 
+            System.out.print("Enter Time Range to (e.g.10:00/13:00): ");
+            String timeRangeEnd = scanner.nextLine();
+
+            bookingService.bookResource(resId,user.getName(),dateFrom, dateTo, timeRangeStart, timeRangeEnd);
             System.out.println("Resource booked.");
             break;
         case 3:

@@ -5,12 +5,14 @@ public class Resource {
     private String name;
     private String type;
     private double costPerHour;
+    private boolean available ;
 
     public Resource(String id, String name, String type, double costPerHour) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.costPerHour = costPerHour;
+        this.available = true;
     }
 
     public String getId() { return id; }
@@ -22,5 +24,11 @@ public class Resource {
     @Override
     public String toString() {
         return id + " - " + name + " (" + type + ") ₹" + costPerHour + "/hr";
+    }
+    public boolean isAvailable() {
+        return available;
+    }
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }

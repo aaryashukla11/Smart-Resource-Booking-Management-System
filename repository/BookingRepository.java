@@ -15,4 +15,5 @@ public class BookingRepository {
     public List<Booking> getAllBookings() {
         return bookings;
     }
+    
 }

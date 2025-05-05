@@ -17,6 +17,9 @@ public class DateTimeRange {
     public boolean overlaps(DateTimeRange other) {
         return (start.isBefore(other.end) && end.isAfter(other.start));
     }
+    public int getDurationInHours() {
+        return (int) java.time.Duration.between(start, end).toHours();
+    }
 
     @Override
     public String toString() {
