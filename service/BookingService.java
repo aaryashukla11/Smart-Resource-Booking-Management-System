@@ -35,6 +35,22 @@ public class BookingService {
         bookingRepo.addBooking(booking);
         return booking;
     }
+    public void bookResource(String resourceId, String username) {
+        Resource resource = resourceRepository.getResourceById(resourceId);
+
+        if (resource != null && resource.isAvailable()) {
+            String bookingId = UUID.randomUUID().toString();
+            Booking booking = new Booking(bookingId, resourceId, username);
+            bookingRepository.save(booking);
+
+            resource.setAvailable(false);
+            resourceRepository.updateResource(resource);
+
+            System.out.println("Resource booked successfully! Booking ID: " + bookingId);
+        } else {
+            System.out.println("Resource is not available or does not exist.");
+        }
+    }
 
     public List<Booking> getAllBookings() {
         return bookingRepo.getAllBookings();
