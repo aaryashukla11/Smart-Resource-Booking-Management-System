@@ -169,5 +169,33 @@ public class Main {
                 System.exit(0);
  }
 }
+private static void regularUserMenu(Scanner scanner, ResourceService resourceService, BookingService bookingService) {
+    System.out.println("\n--- Regular User Menu ---");
+    System.out.println("1. View Available Resources");
+    System.out.println("2. Book Resource");
+    System.out.println("3. Logout");
+
+    int choice = scanner.nextInt();
+    scanner.nextLine();
+
+    switch (choice) {
+        case 1:
+            for (Resource r : resourceService.getAllResources()) {
+                System.out.println(r);
+            }
+            break;
+        case 2:
+            System.out.print("Enter Resource ID to book: ");
+            String resId = scanner.nextLine();
+            bookingService.bookResource(resId);
+            System.out.println("Resource booked.");
+            break;
+        case 3:
+            System.out.println("Logging out...");
+            break;
+        default:
+            System.out.println("Invalid choice.");
+    }
+}
   
 }
