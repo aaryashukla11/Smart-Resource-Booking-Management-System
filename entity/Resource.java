@@ -17,6 +17,7 @@ public class Resource {
     public String getName() { return name; }
     public String getType() { return type; }
     public double getCostPerHour() { return costPerHour; }
+    public void setName(String name) { this.name = name; }
 
     @Override
     public String toString() {

@@ -54,9 +54,9 @@ public class Main {
                     System.out.print("Enter password: ");
                     String loginPass = scanner.nextLine();
 
-                    User user = userService.loginUser(loginUser, loginPass);
+                    User user = userService.login(loginUser, loginPass);
                     if (user != null) {
-                        System.out.println("Welcome, " + user.getUsername() + "! Role: " + user.getRole());
+                        System.out.println("Welcome, " + user.getName() + "! Role: " + user.getRole());
 
                         if (user instanceof Admin) {
                             adminMenu(scanner, userService, reportService);
@@ -131,7 +131,7 @@ public class Main {
                 double cost = scanner.nextDouble();
                 scanner.nextLine();
 
-                Resource newResource = new Resource(id, name, type, cost, true);
+                Resource newResource = new Resource(id, name, type, cost);
                 resourceService.addResource(newResource);
                 System.out.println("Resource added.");
                 break;
@@ -169,4 +169,5 @@ public class Main {
                 System.exit(0);
  }
 }
+  
 }

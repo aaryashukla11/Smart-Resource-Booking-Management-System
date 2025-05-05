@@ -17,4 +17,9 @@ public class ReportService {
         System.out.println("Total Bookings: " + bookings.size());
         // Extend with popular resources, top users, etc.
     }
+    public void generateSystemReport() {
+        List<Booking> bookings = bookingRepo.getAllBookings();
+        System.out.println("Total Bookings: " + bookings.size());
+        // Extend with popular resources, top users, etc.
+    }
 }
